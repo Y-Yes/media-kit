@@ -57,11 +57,15 @@ task downloadDependencies(type: Exec) {
         outputDir.mkdirs()
 
         // Download all *.jar dependencies & verify their MD5 checksums.
+        // NOTE(fork): pointed at a self-built libmpv which carries the
+        // `ao=audiotrack` multi-instance JNI fix (mpv 46fe3cded0) backported
+        // onto the pinned media-kit revision. Consumed by Aves via a
+        // `dependency_overrides` entry, see Y-Yes/libmpv-android-video-build.
         def filesToDownload = [
-            ["url": "https://github.com/media-kit/libmpv-android-video-build/releases/download/v1.1.7/default-arm64-v8a.jar", "md5": "83df25b61193af8fa815e373143ac9af", "destination": file("$buildDir/v1.1.7/default-arm64-v8a.jar")],
-            ["url": "https://github.com/media-kit/libmpv-android-video-build/releases/download/v1.1.7/default-armeabi-v7a.jar", "md5": "22e21526fefc0a2b8f17adbec9f57590", "destination": file("$buildDir/v1.1.7/default-armeabi-v7a.jar")],
-            ["url": "https://github.com/media-kit/libmpv-android-video-build/releases/download/v1.1.7/default-x86_64.jar", "md5": "6fa26bf0459b11f1c0b0dbc29e5b940d", "destination": file("$buildDir/v1.1.7/default-x86_64.jar")],
-            ["url": "https://github.com/media-kit/libmpv-android-video-build/releases/download/v1.1.7/default-x86.jar", "md5": "0d742b756dc9d1fcd84ea271d8b68f32", "destination": file("$buildDir/v1.1.7/default-x86.jar")]
+            ["url": "https://github.com/Y-Yes/libmpv-android-video-build/releases/download/vnext/default-arm64-v8a.jar", "md5": "673ac80f4a846a5b934edeb6d361afa3", "destination": file("$buildDir/vnext/default-arm64-v8a.jar")],
+            ["url": "https://github.com/Y-Yes/libmpv-android-video-build/releases/download/vnext/default-armeabi-v7a.jar", "md5": "29bd84290eaa50e8f7508b82b84fe7e2", "destination": file("$buildDir/vnext/default-armeabi-v7a.jar")],
+            ["url": "https://github.com/Y-Yes/libmpv-android-video-build/releases/download/vnext/default-x86_64.jar", "md5": "81a544d1230c06b27a02c566af31f602", "destination": file("$buildDir/vnext/default-x86_64.jar")],
+            ["url": "https://github.com/Y-Yes/libmpv-android-video-build/releases/download/vnext/default-x86.jar", "md5": "e963a73372847cc9f0f01ca8f00d8b58", "destination": file("$buildDir/vnext/default-x86.jar")]
         ]
 
         filesToDownload.each { fileInfo ->
